@@ -40,8 +40,19 @@ jobs:
 
       - name: Deploy package
         run: |
+          readonly local last_commit_log=$(git log -1 --pretty=format:"%s")
+          readonly local was_build=$(echo "$last_commit_log" | grep -c "Automated build" )
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           Rscript -e 'knitr::purl("build.Rmd")'
           Rscript build.R
-          git add index.html && git commit --amend -m "Build" && git push -f
+          if [[ "$was_build" -eq 0 ]]; then
+              git add index.html
+              git commit -m "Automated build"
+              git push
+          else
+              git add index.html
+              git commit --amend -m "Automated build"
+              git push -f
+          fi
+          
