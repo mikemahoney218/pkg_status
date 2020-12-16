@@ -36,31 +36,41 @@ if (statuses[["any"]]) {
 ### OK
 
 ```{r}
-valueBox(statuses[["ok"]], color = "success")
+valueBox(statuses[["ok"]], 
+         color = "success",
+         icon = "fas fa-thumbs-up")
 ```
 
 ### Notes
 
 ```{r}
-valueBox(statuses[["note"]], color = "info")
+valueBox(statuses[["note"]], 
+         color = "info",
+         icon = "fas fa-info-circle")
 ```
 
 ### Warnings
 
 ```{r}
-valueBox(statuses[["warn"]], color = "warning")
+valueBox(statuses[["warn"]], 
+         color = "warning",
+         icon = "fas fa-flag")
 ```
 
 ### Errors
 
 ```{r}
-valueBox(statuses[["error"]], color = "danger")
+valueBox(statuses[["error"]], 
+         color = "danger",
+         icon = "fas fa-exclamation")
 ```
 
 ### Failures
 
 ```{r}
-valueBox(statuses[["fail"]], color = "danger")
+valueBox(statuses[["fail"]], 
+         color = "danger",
+         icon = "fas fa-exclamation-triangle")
 ```
 
 ## {data-height=795}

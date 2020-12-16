@@ -4,4 +4,5 @@ output:
   flexdashboard::flex_dashboard:
     orientation: rows
     theme: united
+    source_code: "https://github.com/mikemahoney218/pkg_status"
 ---

@@ -19,11 +19,12 @@ names(package_status) <- package_list
 ```{r}
 dashboard_draft <- import_draft(
   frontmatter = "frontmatter.Rmd",
-  package = "package_template.Rmd"
+  package = "package_template.Rmd",
+  endmatter = "endmatter.Rmd"
 )
 
 heddle(package_list, dashboard_draft$package, "PKG_REPLACE") %>% 
-  make_template(dashboard_draft$frontmatter, .) %>% 
+  make_template(dashboard_draft$frontmatter, ., dashboard_draft$endmatter) %>% 
   export_template("index.Rmd")
 
 rmarkdown::render("index.Rmd")
