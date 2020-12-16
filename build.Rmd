@@ -1,0 +1,31 @@
+```{r}
+library(cchecks) # data retrieval
+
+library(tidyr) # unnest flavors
+library(dplyr) # mutate, select, %>% 
+
+library(flexdashboard) 
+library(kableExtra) 
+library(heddlr) # build dashboard!
+
+source("config.R")
+```
+
+```{r}
+package_status <- lapply(package_list, cchecks::cch_pkgs)
+names(package_status) <- package_list
+```
+
+```{r}
+dashboard_draft <- import_draft(
+  frontmatter = "frontmatter.Rmd",
+  package = "package_template.Rmd"
+)
+
+heddle(package_list, dashboard_draft$package, "PKG_REPLACE") %>% 
+  make_template(dashboard_draft$frontmatter, .) %>% 
+  export_template("index.Rmd")
+
+rmarkdown::render("index.Rmd")
+```
+

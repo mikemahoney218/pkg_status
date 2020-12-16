@@ -1,0 +1,7 @@
+---
+title: "Package Status Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    theme: united
+---

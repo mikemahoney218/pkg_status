@@ -1,0 +1,110 @@
+
+```{r}
+relevant_pkg <- package_status[["PKG_REPLACE"]][["data"]]
+```
+
+
+# `r relevant_pkg[["package"]]`
+
+## Summary {data-height=175}
+
+```{r}
+statuses <- unlist(relevant_pkg[["summary"]])
+```
+
+### CRAN Page
+```{r}
+valueBox("",
+         color = "info",
+         icon = "fab fa-r-project",
+         href = relevant_pkg[["url"]])
+```
+
+### 
+```{r}
+if (statuses[["any"]]) {
+  num_issue <- sum(tail(statuses, -2))
+  valueBox(num_issue,
+           ifelse(num_issue > 1, "Issues", "Issue"), 
+           color = "warning", 
+           icon = ifelse(num_issue > 3, "far fa-frown", "far fa-meh"))
+} else {
+  valueBox(0, "Issues", color = "success", icon = "far fa-smile")
+}
+```
+
+### OK
+
+```{r}
+valueBox(statuses[["ok"]], color = "success")
+```
+
+### Notes
+
+```{r}
+valueBox(statuses[["note"]], color = "info")
+```
+
+### Warnings
+
+```{r}
+valueBox(statuses[["warn"]], color = "warning")
+```
+
+### Errors
+
+```{r}
+valueBox(statuses[["error"]], color = "danger")
+```
+
+### Failures
+
+```{r}
+valueBox(statuses[["fail"]], color = "danger")
+```
+
+## {data-height=795}
+
+###
+
+```{r}
+relevant_pkg[["checks"]] %>% 
+  mutate(flavor = cell_spec(flavor, link = check_url)) %>% 
+  select(-check_url) %>% 
+  setNames(c("Flavor", 
+             "Package Version", 
+             "Install Time", 
+             "Check Time", 
+             "Total Time", 
+             "Status")) %>% 
+  kbl(escape = FALSE) %>% 
+  kable_styling()
+```
+
+##
+
+###
+
+```{r}
+if (is.null(relevant_pkg[["check_details"]][["details"]])) {
+  detail_table <- data.frame(
+    "Flavor" = NULL, 
+    "Version" = NULL, 
+    "Output" = NULL, 
+    "Check" = NULL
+  )
+} else {
+  detail_table <- relevant_pkg[["check_details"]][["details"]] %>% 
+    unnest(flavors) %>% 
+    rename(flavor = flavors) %>% 
+    left_join(relevant_pkg[["checks"]][c("flavor", "check_url")]) %>% 
+    mutate(flavor = cell_spec(flavor, link = check_url)) %>% 
+    select(flavor, everything(), -check_url) %>% 
+    setNames(tools::toTitleCase(names(.)))
+  
+}
+detail_table %>% 
+  kbl(escape = FALSE) %>% 
+  kable_styling()
+```
+
