@@ -1,4 +1,5 @@
 package_list <- c(
   "heddlr",
-  "spacey"
+  "spacey",
+  "terrainr"
 )
