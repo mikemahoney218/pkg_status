@@ -1,6 +1,9 @@
 package_list <- c(
   "heddlr",
-  "spacey",
   "terrainr",
-  "unifir"
+  "unifir",
+  "spatialsample",
+  "geojsonio",
+  "waywiser",
+  "proceduralnames"
 )
